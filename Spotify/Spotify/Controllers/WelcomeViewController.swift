@@ -12,6 +12,7 @@ import UIKit
 
 class WelcomeViewController : UIViewController {
       // MARK:  properties
+   let authManager : AuthManager = AuthManager()
    let loginButton : UIButton = {
       let button = UIButton(type: .custom)
       button.setTitle("Login with Spotify", for: .normal)
@@ -22,15 +23,22 @@ class WelcomeViewController : UIViewController {
       return button
    }()
 
+   let iconView : UIImageView = {
+      let iv = UIImageView()
+      iv.image = UIImage(named: "spotify_icon")
+      iv.contentMode = .scaleAspectFill
+      return iv
+   }()
+
+
       // MARK: Lifecyle
    
    override func viewDidLoad() {
       super.viewDidLoad()
-      title = "Spotify"
-      self.navigationController?.navigationBar.prefersLargeTitles = true
-      view.backgroundColor = .systemGreen
-      view.addSubview(loginButton)
+      setUpNavBar()
+      setUpView()
       configureLoginButton()
+      configureIconView()
    }
 
 
@@ -39,7 +47,10 @@ class WelcomeViewController : UIViewController {
 
 
    @objc func didTappedLoginButton( _ sender : UIButton) {
-      let vc = LoginViewController()
+      let vc = LoginViewController { [weak self] success in
+         self?.handleOnComplete(success)
+      }
+
       vc.navigationItem.largeTitleDisplayMode = .never
       navigationController?.pushViewController(vc, animated: true)
    }
@@ -47,12 +58,36 @@ class WelcomeViewController : UIViewController {
 
       // MARK:  Makers
 
+   func setUpNavBar() {
+      title = "Side Product"
+      navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+      self.navigationController?.navigationBar.prefersLargeTitles = true
+      view.backgroundColor = .black
+   }
+
+   func setUpView(){
+      view.addSubview(loginButton)
+      view.addSubview(iconView)
+   }
+
+   func handleOnComplete(_ success : Bool) {
+
+   }
+
    func configureLoginButton(){
       loginButton.snp.makeConstraints { make in
          make.left.equalTo(view).inset(25)
          make.right.equalTo(view).inset(25)
-         make.bottom.equalTo(view).inset(50)
+         make.bottom.equalTo(view).inset(100)
          make.height.equalTo(50)
+      }
+   }
+
+   func configureIconView() {
+      iconView.snp.makeConstraints { make in
+         make.centerX.equalTo(view)
+         make.centerY.equalTo(view)
+         make.width.height.equalTo(250)
       }
    }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		466021432865179F00AE1DA7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466021422865179F00AE1DA7 /* NetworkManager.swift */; };
 		4688D5452864C1C50041AD25 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5442864C1C50041AD25 /* Utilities.swift */; };
 		4688D5472864D5650041AD25 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5462864D5650041AD25 /* LoginViewController.swift */; };
 		4688D54A2864DB000041AD25 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4688D5492864DB000041AD25 /* SnapKit */; };
@@ -18,10 +19,14 @@
 		46A9B1AB2864B423000D32FC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AA2864B423000D32FC /* HomeViewController.swift */; };
 		46A9B1AD2864B43F000D32FC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AC2864B43F000D32FC /* SearchViewController.swift */; };
 		46A9B1AF2864B470000D32FC /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AE2864B470000D32FC /* LibraryViewController.swift */; };
+		46B625852865119B00F3917B /* INetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B625842865119B00F3917B /* INetworkManager.swift */; };
 		46EE8D302864DE8200FF86FB /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */; };
+		46EE8D332864F19B00FF86FB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE8D322864F19B00FF86FB /* Constants.swift */; };
+		46EE8D372864F26A00FF86FB /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE8D362864F26A00FF86FB /* AuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		466021422865179F00AE1DA7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4688D5442864C1C50041AD25 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4688D5462864D5650041AD25 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		46A9B18B2864B2B8000D32FC /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +39,10 @@
 		46A9B1AA2864B423000D32FC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		46A9B1AC2864B43F000D32FC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		46A9B1AE2864B470000D32FC /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		46B625842865119B00F3917B /* INetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkManager.swift; sourceTree = "<group>"; };
 		46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		46EE8D322864F19B00FF86FB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		46EE8D362864F26A00FF86FB /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,9 +143,37 @@
 		46A9B1B02864C187000D32FC /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				4688D5442864C1C50041AD25 /* Utilities.swift */,
+				46EE8D352864F25F00FF86FB /* Init */,
+				46EE8D342864F25900FF86FB /* Managers */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		46B625822865117400F3917B /* NavigationManager */ = {
+			isa = PBXGroup;
+			children = (
+				46B625842865119B00F3917B /* INetworkManager.swift */,
+				466021422865179F00AE1DA7 /* NetworkManager.swift */,
+			);
+			path = NavigationManager;
+			sourceTree = "<group>";
+		};
+		46EE8D342864F25900FF86FB /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				46B625822865117400F3917B /* NavigationManager */,
+				46EE8D362864F26A00FF86FB /* AuthManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		46EE8D352864F25F00FF86FB /* Init */ = {
+			isa = PBXGroup;
+			children = (
+				4688D5442864C1C50041AD25 /* Utilities.swift */,
+				46EE8D322864F19B00FF86FB /* Constants.swift */,
+			);
+			path = Init;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,11 +256,15 @@
 				46A9B1AD2864B43F000D32FC /* SearchViewController.swift in Sources */,
 				46A9B18F2864B2B8000D32FC /* AppDelegate.swift in Sources */,
 				4688D5452864C1C50041AD25 /* Utilities.swift in Sources */,
+				46EE8D372864F26A00FF86FB /* AuthManager.swift in Sources */,
 				46A9B1912864B2B8000D32FC /* SceneDelegate.swift in Sources */,
+				46EE8D332864F19B00FF86FB /* Constants.swift in Sources */,
 				4688D5472864D5650041AD25 /* LoginViewController.swift in Sources */,
 				46A9B1A92864B348000D32FC /* BaseViewController.swift in Sources */,
 				46A9B1AF2864B470000D32FC /* LibraryViewController.swift in Sources */,
 				46A9B1AB2864B423000D32FC /* HomeViewController.swift in Sources */,
+				466021432865179F00AE1DA7 /* NetworkManager.swift in Sources */,
+				46B625852865119B00F3917B /* INetworkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,11 +406,13 @@
 				DEVELOPMENT_TEAM = 348T9RAC33;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spotify/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpotiftSideProduct;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -378,9 +420,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.meatlanosrep.Spotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -394,11 +439,13 @@
 				DEVELOPMENT_TEAM = 348T9RAC33;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spotify/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpotiftSideProduct;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -406,9 +453,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.meatlanosrep.Spotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
