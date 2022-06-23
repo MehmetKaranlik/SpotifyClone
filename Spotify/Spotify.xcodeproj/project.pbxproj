@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4688D5452864C1C50041AD25 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5442864C1C50041AD25 /* Utilities.swift */; };
+		4688D5472864D5650041AD25 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5462864D5650041AD25 /* LoginViewController.swift */; };
+		4688D54A2864DB000041AD25 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4688D5492864DB000041AD25 /* SnapKit */; };
 		46A9B18F2864B2B8000D32FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B18E2864B2B8000D32FC /* AppDelegate.swift */; };
 		46A9B1912864B2B8000D32FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1902864B2B8000D32FC /* SceneDelegate.swift */; };
 		46A9B1982864B2B9000D32FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46A9B1972864B2B9000D32FC /* Assets.xcassets */; };
@@ -16,10 +18,12 @@
 		46A9B1AB2864B423000D32FC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AA2864B423000D32FC /* HomeViewController.swift */; };
 		46A9B1AD2864B43F000D32FC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AC2864B43F000D32FC /* SearchViewController.swift */; };
 		46A9B1AF2864B470000D32FC /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A9B1AE2864B470000D32FC /* LibraryViewController.swift */; };
+		46EE8D302864DE8200FF86FB /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4688D5442864C1C50041AD25 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		4688D5462864D5650041AD25 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		46A9B18B2864B2B8000D32FC /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A9B18E2864B2B8000D32FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46A9B1902864B2B8000D32FC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +34,7 @@
 		46A9B1AA2864B423000D32FC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		46A9B1AC2864B43F000D32FC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		46A9B1AE2864B470000D32FC /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4688D54A2864DB000041AD25 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +87,8 @@
 				46A9B1AA2864B423000D32FC /* HomeViewController.swift */,
 				46A9B1AC2864B43F000D32FC /* SearchViewController.swift */,
 				46A9B1AE2864B470000D32FC /* LibraryViewController.swift */,
+				4688D5462864D5650041AD25 /* LoginViewController.swift */,
+				46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -148,6 +156,9 @@
 			dependencies = (
 			);
 			name = Spotify;
+			packageProductDependencies = (
+				4688D5492864DB000041AD25 /* SnapKit */,
+			);
 			productName = Spotify;
 			productReference = 46A9B18B2864B2B8000D32FC /* Spotify.app */;
 			productType = "com.apple.product-type.application";
@@ -176,6 +187,9 @@
 				Base,
 			);
 			mainGroup = 46A9B1822864B2B8000D32FC;
+			packageReferences = (
+				4688D5482864DB000041AD25 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 46A9B18C2864B2B8000D32FC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -202,10 +216,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46EE8D302864DE8200FF86FB /* WelcomeViewController.swift in Sources */,
 				46A9B1AD2864B43F000D32FC /* SearchViewController.swift in Sources */,
 				46A9B18F2864B2B8000D32FC /* AppDelegate.swift in Sources */,
 				4688D5452864C1C50041AD25 /* Utilities.swift in Sources */,
 				46A9B1912864B2B8000D32FC /* SceneDelegate.swift in Sources */,
+				4688D5472864D5650041AD25 /* LoginViewController.swift in Sources */,
 				46A9B1A92864B348000D32FC /* BaseViewController.swift in Sources */,
 				46A9B1AF2864B470000D32FC /* LibraryViewController.swift in Sources */,
 				46A9B1AB2864B423000D32FC /* HomeViewController.swift in Sources */,
@@ -418,6 +434,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4688D5482864DB000041AD25 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4688D5492864DB000041AD25 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4688D5482864DB000041AD25 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 46A9B1832864B2B8000D32FC /* Project object */;
 }
