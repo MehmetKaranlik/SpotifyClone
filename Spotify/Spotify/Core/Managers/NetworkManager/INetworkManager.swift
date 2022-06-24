@@ -14,6 +14,11 @@ enum RequestType: String {
    case PUT
 }
 
+enum BodyType {
+   case JSON
+   case MULTIFORM
+}
+
 struct BaseNetworkResponse<T: Codable> {
    let response: URLResponse?
    let data: T?
@@ -26,50 +31,58 @@ protocol INetworkManager {
       parseModel: T.Type,
       requestType: RequestType,
       body: [String: String]?,
+      bodyType: BodyType,
       queryParameters: [String: String]?
    ) async -> BaseNetworkResponse<T>
 
    func headerGenerator(request: inout URLRequest)
-   func bodyGenerator(request: inout URLRequest, body: [String: String]?)
+   func bodyGenerator(request: inout URLRequest, body: [String: String]?, bodyType:  BodyType)
    func queryGenerator(requestURL: inout URL, queryParameters: [String: String]?)
-   func handleRequest(request: URLRequest) async -> (Data, URLResponse)?
+   func handleRequest(request: URLRequest) async -> (Data?, URLResponse?)
    func decodeData<T: Codable>(data: Data, parseModel: T.Type) -> T?
 }
 
 extension INetworkManager {
    func headerGenerator(request: inout URLRequest) {
-      Task { () -> [String: String] in
-         let accessToken = await authManager.accesToken
+         let accessToken =  authManager.authorizationSecretBase64()
+         guard accessToken != nil else { return }
          let headers = [
-            "Authorization": "Bearer \(accessToken ?? "")",
-            "ContentType": "Application/json"
+            "Authorization": "Basic \(accessToken!)",
+            "ContentType": "application/x-www-form-urlencoded"
          ]
-         return headers
-      }
+
+         request.allHTTPHeaderFields = headers
    }
 
-   func bodyGenerator(request: inout URLRequest, body: [String: String]?) {
+   func bodyGenerator(request: inout URLRequest, body: [String: String]?, bodyType:  BodyType) {
       guard body != nil else { return }
-      let data = try? JSONSerialization.data(withJSONObject: body!, options: .prettyPrinted)
-      request.httpBody = data
+      if bodyType == .JSON {
+         let data = try? JSONSerialization.data(withJSONObject: body!, options: .prettyPrinted)
+         request.httpBody = data
+      }else {
+         var components = URLComponents()
+         var queryItems = [URLQueryItem]()
+         body?.forEach{ queryItems.append(URLQueryItem(name: $0, value: $1))  }
+         components.queryItems = queryItems
+         request.httpBody = components.query?.data(using: .utf8)
+
+      }
    }
 
    func queryGenerator(requestURL: inout URL, queryParameters: [String: String]?) {
       guard queryParameters != nil else { return }
       var queries = [URLQueryItem]()
-      queryParameters!.forEach {
-         queries.append(URLQueryItem(name: $0, value: $1))
-      }
+      queryParameters!.forEach { queries.append(URLQueryItem(name: $0, value: $1)) }
       requestURL.append(queryItems: queries)
    }
 
-   func handleRequest(request: URLRequest) async -> (Data, URLResponse)? {
+   func handleRequest(request: URLRequest) async -> (Data?, URLResponse?) {
       do {
          let (data, response) = try await URLSession.shared.data(for: request)
          return (data, response)
       } catch let e {
          print(e)
-         return nil
+         return (nil,nil)
       }
    }
 

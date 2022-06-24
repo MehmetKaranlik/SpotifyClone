@@ -6,79 +6,71 @@
 //
 
 import Foundation
-import UIKit
 import SnapKit
+import UIKit
 import WebKit
 
-class LoginViewController : UIViewController {
-      // MARK:  properties
+class LoginViewController: UIViewController {
+   // MARK: properties
+
+   typealias CompletionHandler = (Bool) -> ()
 
    let authManager = AuthManager()
-   typealias CompletionHandler = (Bool) -> ()
-   let onSuccess : (Bool) -> ()
-   lazy var webView : WKWebView = {
+
+   let onSuccess: CompletionHandler
+
+   lazy var webView: WKWebView = {
       let pref = WKPreferences()
       pref.javaScriptCanOpenWindowsAutomatically = true
-
       let configuration = WKWebViewConfiguration()
-
       configuration.preferences = pref
       let webView = WKWebView(frame: .zero, configuration: configuration)
-
       return webView
    }()
 
-   init(_ onComplete : @escaping CompletionHandler) {
+   init(_ onComplete: @escaping CompletionHandler) {
       self.onSuccess = onComplete
       super.init(nibName: nil, bundle: nil)
    }
 
+   @available(*, unavailable)
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
 
-
-      // MARK: Lifecyle
+   // MARK: Lifecyle
 
    override func viewDidLoad() {
-
       view.addSubview(webView)
       webView.navigationDelegate = self
 
       super.viewDidLoad()
    }
-      // MARK: Selectors
 
+   // MARK: Selectors
 
    override func viewDidLayoutSubviews() {
       webView.frame = view.bounds
-      Task {
-         let urlRequest = await URLRequest(url: authManager.signInUrl!)
+         let urlRequest =  URLRequest(url: authManager.signInUrl!)
          webView.load(urlRequest)
-
-      }
    }
 
-
-      // MARK:  Makers
-
-
-
+      // MARK: Makers
 }
 
 
-
-extension LoginViewController : WKNavigationDelegate {
-
+extension LoginViewController: WKNavigationDelegate {
    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+      guard let url = webView.url else { return }
+      let components = URLComponents(string: url.absoluteString)
+      guard let code = components?.queryItems?.first(where: { $0.name == "code" })?.value else { return }
+      // leaving this view
 
-         guard let url = webView.url else { return }
-         let components = URLComponents(string: url.absoluteString)
-         print("burasi calisti")
-         print(components?.queryItems)
-         let code = components?.queryItems?.first(where: { $0.name == "code" })?.value
-         print("Code : \(code)")
-
+         Task {
+            await self.authManager.excangeTokenWithCode(code) { [unowned self] success in
+               self.onSuccess(success)
+            }
+         }
+      
    }
-
 }

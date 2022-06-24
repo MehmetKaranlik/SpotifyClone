@@ -39,7 +39,6 @@ class BaseViewController : UITabBarController {
 
       self.viewControllers = [homeViewController,searchViewController,libraryViewController]
       viewControllers?.forEach({ controller in
-         print(controller)
          let index = viewControllers?.firstIndex(of: controller)
          controller.tabBarItem = UITabBarItem(title: name[index!], image: UIImage(systemName: symbols[index!]), tag: index!)
       })
