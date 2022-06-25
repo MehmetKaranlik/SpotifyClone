@@ -11,14 +11,12 @@ class AuthManager {
    static let shared = AuthManager()
    @Published var accesToken: String? {
       didSet {
-
          cacheAccessToken()
       }
    }
 
    @Published var refreshToken: String? {
       didSet {
-
          cacheRefreshToken()
       }
    }
@@ -26,9 +24,8 @@ class AuthManager {
    init() {
       self.accesToken = localeManager.getStringValue(key: LocaleKeys.ACCESS_TOKEN.rawValue)
       self.refreshToken = localeManager.getStringValue(key: LocaleKeys.REFRESH_TOKEN.rawValue)
-      guard let aliveData = localeManager.getStringValue(key: LocaleKeys.EXPIRATION_DATE.rawValue) else { return }
-      print(aliveData)
-      self.tokenExpirationData = try? Date(aliveData, strategy: .iso8601)
+      self.tokenExpirationData = localeManager.getDate(key: LocaleKeys.EXPIRATION_DATE.rawValue)
+      print("Result : \(tokenExpirationData)")
    }
 
    let localeManager: LocaleManager = .shared
@@ -59,7 +56,7 @@ class AuthManager {
 
     var shouldRefreshToken: Bool {
       if tokenExpirationData != nil {
-         return .now < tokenExpirationData!
+         return tokenExpirationData! < .now - 600
       }
       return true
    }
@@ -120,13 +117,11 @@ class AuthManager {
    }
 
    private func cacheRefreshDate() {
-      let stringFormat = tokenExpirationData?.debugDescription
 
-      if let stringFormat {
          tokenExpirationData != nil ?
          localeManager
-            .setStringValue(key: LocaleKeys.EXPIRATION_DATE.rawValue,value: stringFormat)
+            .setDateValue(key: LocaleKeys.EXPIRATION_DATE.rawValue, value: tokenExpirationData!)
          : nil
-      }
+
    }
 }

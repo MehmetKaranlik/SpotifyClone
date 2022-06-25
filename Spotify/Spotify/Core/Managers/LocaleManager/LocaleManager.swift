@@ -28,6 +28,10 @@ struct LocaleManager : ILocaleManager {
 
    }
 
+   func setDateValue(key: LocaleKeys.RawValue, value : Date) {
+      userDefaults.set(value, forKey: key)
+   }
+
    func getStringValue(key: LocaleKeys.RawValue) -> String? {
       return userDefaults.string(forKey: key)
    }
@@ -40,6 +44,10 @@ struct LocaleManager : ILocaleManager {
    func getIntValue(key: LocaleKeys.RawValue) -> Int? {
       return userDefaults.integer(forKey: key)
 
+   }
+
+   func getDate(key: LocaleKeys.RawValue) -> Date? {
+      return userDefaults.object(forKey: key) as? Date
    }
 
 

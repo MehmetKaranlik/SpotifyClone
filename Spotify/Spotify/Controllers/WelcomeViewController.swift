@@ -1,9 +1,9 @@
-//
-//  WelcomeViewController.swift
-//  Spotify
-//
-//  Created by mehmet karanlık on 23.06.2022.
-//
+   //
+   //  WelcomeViewController.swift
+   //  Spotify
+   //
+   //  Created by mehmet karanlık on 23.06.2022.
+   //
 
 import Foundation
 
@@ -13,6 +13,7 @@ import UIKit
 class WelcomeViewController : UIViewController {
       // MARK:  properties
    let authManager : AuthManager = AuthManager()
+
    let loginButton : UIButton = {
       let button = UIButton(type: .custom)
       button.setTitle("Login with Spotify", for: .normal)
@@ -51,7 +52,6 @@ class WelcomeViewController : UIViewController {
          print("Result : \(success)")
          self?.handleOnComplete(success)
       }
-
       vc.navigationItem.largeTitleDisplayMode = .never
       navigationController?.pushViewController(vc, animated: true)
    }
@@ -61,8 +61,12 @@ class WelcomeViewController : UIViewController {
 
    func setUpNavBar() {
       title = "Side Product"
-      navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-      self.navigationController?.navigationBar.prefersLargeTitles = true
+      navigationController?
+         .navigationBar
+         .largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+      self.navigationController?
+         .navigationBar
+         .prefersLargeTitles = true
       view.backgroundColor = .black
    }
 
@@ -71,16 +75,7 @@ class WelcomeViewController : UIViewController {
       view.addSubview(iconView)
    }
 
-   func handleOnComplete(_ success : Bool) {
-      if success  {
-         DispatchQueue.main.async {
-            let vc = BaseViewController()
 
-            self.navigationController?.pushViewController(vc, animated: true)
-            self.navigationController?.isNavigationBarHidden = true
-         }
-      }
-   }
 
    func configureLoginButton(){
       loginButton.snp.makeConstraints { make in
@@ -96,6 +91,16 @@ class WelcomeViewController : UIViewController {
          make.centerX.equalTo(view)
          make.centerY.equalTo(view)
          make.width.height.equalTo(250)
+      }
+   }
+
+   func handleOnComplete(_ success : Bool) {
+      if success  {
+         DispatchQueue.main.async {
+            let vc = BaseViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.isNavigationBarHidden = true
+         }
       }
    }
 

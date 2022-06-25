@@ -28,6 +28,9 @@ class LoginViewController: UIViewController {
       return webView
    }()
 
+
+   // MARK:  init
+
    init(_ onComplete: @escaping CompletionHandler) {
       self.onSuccess = onComplete
       super.init(nibName: nil, bundle: nil)
@@ -47,17 +50,18 @@ class LoginViewController: UIViewController {
       super.viewDidLoad()
    }
 
-   // MARK: Selectors
+
 
    override func viewDidLayoutSubviews() {
       webView.frame = view.bounds
-      let urlRequest =  URLRequest(url: authManager.signInURL!)
-         webView.load(urlRequest)
+      let urlRequest = URLRequest(url: authManager.signInURL!)
+      webView.load(urlRequest)
    }
 
-      // MARK: Makers
-}
+   // MARK: Selectors
 
+   // MARK: Makers
+}
 
 extension LoginViewController: WKNavigationDelegate {
    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -65,13 +69,11 @@ extension LoginViewController: WKNavigationDelegate {
       let components = URLComponents(string: url.absoluteString)
       guard let code = components?.queryItems?.first(where: { $0.name == "code" })?.value else { return }
       // leaving this view
-      self.navigationController?.popViewController(animated: true)
-
-         Task {
-            await self.authManager.excangeTokenWithCode(code) { [unowned self] success in
-               self.onSuccess(success)
-            }
+      navigationController?.popViewController(animated: true)
+      Task {
+         await self.authManager.excangeTokenWithCode(code) { [unowned self] success in
+            self.onSuccess(success)
          }
-      
+      }
    }
 }
