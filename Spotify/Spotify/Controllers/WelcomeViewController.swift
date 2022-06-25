@@ -48,6 +48,7 @@ class WelcomeViewController : UIViewController {
 
    @objc func didTappedLoginButton( _ sender : UIButton) {
       let vc = LoginViewController { [weak self] success in
+         print("Result : \(success)")
          self?.handleOnComplete(success)
       }
 
@@ -58,7 +59,7 @@ class WelcomeViewController : UIViewController {
 
       // MARK:  Makers
 
-   func setUpNavBar() {
+   func setUpNavBar() {
       title = "Side Product"
       navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
       self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -71,7 +72,14 @@ class WelcomeViewController : UIViewController {
    }
 
    func handleOnComplete(_ success : Bool) {
+      if success  {
+         DispatchQueue.main.async {
+            let vc = BaseViewController()
 
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.isNavigationBarHidden = true
+         }
+      }
    }
 
    func configureLoginButton(){

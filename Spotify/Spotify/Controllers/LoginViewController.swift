@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
 
    override func viewDidLayoutSubviews() {
       webView.frame = view.bounds
-         let urlRequest =  URLRequest(url: authManager.signInUrl!)
+      let urlRequest =  URLRequest(url: authManager.signInURL!)
          webView.load(urlRequest)
    }
 
@@ -65,6 +65,7 @@ extension LoginViewController: WKNavigationDelegate {
       let components = URLComponents(string: url.absoluteString)
       guard let code = components?.queryItems?.first(where: { $0.name == "code" })?.value else { return }
       // leaving this view
+      self.navigationController?.popViewController(animated: true)
 
          Task {
             await self.authManager.excangeTokenWithCode(code) { [unowned self] success in

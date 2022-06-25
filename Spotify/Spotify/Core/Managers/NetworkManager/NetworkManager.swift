@@ -29,10 +29,10 @@ struct NetworkManager : INetworkManager {
       headerGenerator(request: &request)
       bodyGenerator(request: &request, body: body,bodyType: bodyType)
       let (data,response) : (Data?,URLResponse?) = await handleRequest(request: request)
-      let jsonData = try! JSONSerialization.jsonObject(with: data!)
-      for i in jsonData as! Dictionary<String,AnyObject> {
-         print("Result : \(i.key) : \(i.value)")
-      }
+//      let jsonData = try! JSONSerialization.jsonObject(with: data!)
+//      for i in jsonData as! Dictionary<String,AnyObject> {
+//         print("Result : \(i.key) : \(i.value)")
+//      }
       if let data {
          let decodedData = decodeData(data: data, parseModel: parseModel.self)
          return BaseNetworkResponse(response: response, data: decodedData)

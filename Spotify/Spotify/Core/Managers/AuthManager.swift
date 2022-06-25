@@ -7,83 +7,126 @@
 
 import Foundation
 
-
 class AuthManager {
-
    static let shared = AuthManager()
-   @Published var accesToken : String?
-   @Published var refreshToken : String?
+   @Published var accesToken: String? {
+      didSet {
 
-   let localeManager : LocaleManager = LocaleManager.shared
+         cacheAccessToken()
+      }
+   }
+
+   @Published var refreshToken: String? {
+      didSet {
+
+         cacheRefreshToken()
+      }
+   }
+
+   init() {
+      self.accesToken = localeManager.getStringValue(key: LocaleKeys.ACCESS_TOKEN.rawValue)
+      self.refreshToken = localeManager.getStringValue(key: LocaleKeys.REFRESH_TOKEN.rawValue)
+      guard let aliveData = localeManager.getStringValue(key: LocaleKeys.EXPIRATION_DATE.rawValue) else { return }
+      print(aliveData)
+      self.tokenExpirationData = try? Date(aliveData, strategy: .iso8601)
+   }
+
+   let localeManager: LocaleManager = .shared
    lazy var networkManager = NetworkManager(authManager: self)
 
    let queue = DispatchQueue(label: "queue", qos: .background,
                              attributes: .concurrent, autoreleaseFrequency: .inherit, target: .main)
 
-    struct Constants {
-      static let spotifyBaseUrl : String = "https://accounts.spotify.com/authorize?"
-      static let spotifyScopes : String = "user-read-private"
-      static let clientID : String = "3cbad68b84604c298103b3be35ec3111"
-      static let redirectURI : String = "https://github.com/MehmetKaranlik/SpotifyClone"
-       static let clientSecret : String = "946a49a7af5e4447a84d48a220277659"
-
-
+   enum Constants {
+      static let spotifyBaseURL: String = "https://accounts.spotify.com/authorize?"
+      static let spotifyScopes: String = "user-read-private"
+      static let clientID: String = "3cbad68b84604c298103b3be35ec3111"
+      static let redirectURI: String = "https://github.com/MehmetKaranlik/SpotifyClone"
+      static let clientSecret: String = "946a49a7af5e4447a84d48a220277659"
    }
 
-   public var signInUrl : URL? {
-      return URL(string: Utilities.spotifyOAuth2URLGenerator(baseUrl: Constants.spotifyBaseUrl, clientID: Constants.clientID, scopes: Constants.spotifyScopes, redirectURI: Constants.redirectURI))
-
+   public var signInURL: URL? {
+      return URL(string: Utilities.spotifyOAuth2URLGenerator(baseUrl: Constants.spotifyBaseURL, clientID: Constants.clientID, scopes: Constants.spotifyScopes, redirectURI: Constants.redirectURI))
    }
 
-   func fetchAccesToken() -> String? {
-         return accesToken
-   }
 
-   func updateAccessToken(_ newToken : String) {
-      queue.async {
-         self.accesToken = newToken
+
+   private var tokenExpirationData: Date? {
+      didSet {
+         cacheRefreshDate()
       }
    }
 
-   private var tokenExpirationData : Date? {
-      return nil
+    var shouldRefreshToken: Bool {
+      if tokenExpirationData != nil {
+         return .now < tokenExpirationData!
+      }
+      return true
    }
 
-   private var shouldRefreshToken: Bool {
-      return false
-   }
-
-   public func excangeTokenWithCode(_ code: String, onComplete : @escaping (Bool) -> ()) async {
+   public func excangeTokenWithCode(_ code: String, onComplete: @escaping (Bool) -> ()) async {
       let token = await networkManager.fetchAccessTokenByCode(code: code)
-      print("Result : \(token!.accessToken!)")
-      queue.async {
-         
+      if let token {
+         queue.async {
+            self.setAccestAccesToken(token.accessToken!)
+            self.setRefreshToken(token.refreshToken!)
+            self.setExpirationDate(token.expiresIn!)
+         }
+        return  onComplete(true)
       }
+      return onComplete(false)
    }
 
 
-   private func cacheToken() {
-      localeManager.setStringValue(key: LocaleKeys.ACCESS_TOKEN.rawValue, value: accesToken!)
-   }
 
    func authorizationSecretBase64() -> String? {
-      let secretAuth : String = Constants.clientID+":"+Constants.clientSecret
-      //converting base64
+      let secretAuth: String = Constants.clientID+":"+Constants.clientSecret
+      // converting base64
       let data = secretAuth.data(using: .utf8)
       let base64String = data?.base64EncodedString()
       guard base64String != nil else { return nil }
       return base64String!
    }
 
+   // setters
+
+   private func setAccestAccesToken(_ newToken: String) {
+      queue.async {
+         self.accesToken = newToken
+      }
+   }
+
+   private func setRefreshToken(_ newToken: String) {
+      queue.async {
+         self.refreshToken = newToken
+      }
+   }
+
+   private func setExpirationDate( _ newDateInSeconds : Int) {
+      queue.async {
+         self.tokenExpirationData = Date(timeInterval: TimeInterval(integerLiteral: Int64(newDateInSeconds)), since: .now)
+      }
+   }
 
 
 
+   // cachers
+   private func cacheAccessToken() {
+      accesToken != nil ? localeManager.setStringValue(key: LocaleKeys.ACCESS_TOKEN.rawValue, value: accesToken!) : nil
+   }
 
+   private func cacheRefreshToken() {
+      refreshToken !=  nil ?  localeManager.setStringValue(key: LocaleKeys.REFRESH_TOKEN.rawValue, value: refreshToken!) : nil
+   }
 
+   private func cacheRefreshDate() {
+      let stringFormat = tokenExpirationData?.debugDescription
 
-
-
-
-
-
+      if let stringFormat {
+         tokenExpirationData != nil ?
+         localeManager
+            .setStringValue(key: LocaleKeys.EXPIRATION_DATE.rawValue,value: stringFormat)
+         : nil
+      }
+   }
 }
