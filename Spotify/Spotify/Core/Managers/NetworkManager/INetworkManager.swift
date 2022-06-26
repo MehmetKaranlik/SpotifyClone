@@ -19,6 +19,12 @@ enum BodyType {
    case MULTIFORM
 }
 
+enum HeaderType {
+   case CODE
+   case STANDART
+   case NONE
+}
+
 struct BaseNetworkResponse<T: Codable> {
    let response: URLResponse?
    let data: T?
@@ -31,11 +37,12 @@ protocol INetworkManager {
       parseModel: T.Type,
       requestType: RequestType,
       body: [String: String]?,
+      headerType: HeaderType?,
       bodyType: BodyType,
       queryParameters: [String: String]?
    ) async -> BaseNetworkResponse<T>
 
-   func headerGenerator(request: inout URLRequest)
+   func headerGenerator(request: inout URLRequest,headerType : HeaderType)
    func bodyGenerator(request: inout URLRequest, body: [String: String]?, bodyType:  BodyType)
    func queryGenerator(requestURL: inout URL, queryParameters: [String: String]?)
    func handleRequest(request: URLRequest) async -> (Data?, URLResponse?)
@@ -43,15 +50,38 @@ protocol INetworkManager {
 }
 
 extension INetworkManager {
-   func headerGenerator(request: inout URLRequest) {
-         let accessToken =  authManager?.authorizationSecretBase64()
-         guard accessToken != nil else { return }
-         let headers = [
-            "Authorization": "Basic \(accessToken!)",
-            "ContentType": "application/x-www-form-urlencoded"
-         ]
+   func headerGenerator(request: inout URLRequest,headerType : HeaderType) {
+      switch headerType {
+         case .NONE:
+            let accessToken =  authManager?.authorizationSecretBase64()
+            guard accessToken != nil else { return }
+            let headers = [
+               "Authorization": "Basic \(accessToken!)",
+               "ContentType": "application/x-www-form-urlencoded"
+            ]
 
-         request.allHTTPHeaderFields = headers
+            request.allHTTPHeaderFields = headers
+         case .CODE:
+            let accessToken =  authManager?.authorizationSecretBase64()
+            guard accessToken != nil else { return }
+            let headers = [
+               "Authorization": "Basic \(accessToken!)",
+               "ContentType": "application/x-www-form-urlencoded"
+            ]
+
+            request.allHTTPHeaderFields = headers
+         case .STANDART:
+            let accesToken = authManager?.accesToken
+            guard accesToken != nil else { return }
+
+            let headers = [
+               "Authorization": "Bearer \(accesToken!)",
+               "ContentType": "application/x-www-form-urlencoded"
+            ]
+            request.allHTTPHeaderFields = headers
+
+
+      }
    }
 
    func bodyGenerator(request: inout URLRequest, body: [String: String]?, bodyType:  BodyType) {
@@ -106,6 +136,7 @@ extension INetworkManager {
             "grant_type": "refresh_token",
             "refresh_token": refreshToken
          ],
+         headerType: .CODE ,
          bodyType: .JSON,
          queryParameters: nil)
       return nil

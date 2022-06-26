@@ -11,6 +11,8 @@
 		461FEB142865CFE8001D263B /* LocaleKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FEB132865CFE8001D263B /* LocaleKeys.swift */; };
 		461FEB162865D0FE001D263B /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FEB152865D0FE001D263B /* LocaleManager.swift */; };
 		461FEB192865D7F0001D263B /* NetworkPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FEB182865D7F0001D263B /* NetworkPaths.swift */; };
+		4632747B2868FAD800CAFAEF /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4632747A2868FAD800CAFAEF /* MainService.swift */; };
+		4632747D2868FAE100CAFAEF /* IMainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4632747C2868FAE100CAFAEF /* IMainService.swift */; };
 		466021432865179F00AE1DA7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466021422865179F00AE1DA7 /* NetworkManager.swift */; };
 		4688D5452864C1C50041AD25 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5442864C1C50041AD25 /* Utilities.swift */; };
 		4688D5472864D5650041AD25 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4688D5462864D5650041AD25 /* LoginViewController.swift */; };
@@ -34,6 +36,8 @@
 		461FEB132865CFE8001D263B /* LocaleKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleKeys.swift; sourceTree = "<group>"; };
 		461FEB152865D0FE001D263B /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
 		461FEB182865D7F0001D263B /* NetworkPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPaths.swift; sourceTree = "<group>"; };
+		4632747A2868FAD800CAFAEF /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
+		4632747C2868FAE100CAFAEF /* IMainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMainService.swift; sourceTree = "<group>"; };
 		466021422865179F00AE1DA7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4688D5442864C1C50041AD25 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4688D5462864D5650041AD25 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 		4632746C2868F96300CAFAEF /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4632747A2868FAD800CAFAEF /* MainService.swift */,
+				4632747C2868FAE100CAFAEF /* IMainService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -376,6 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4632747D2868FAE100CAFAEF /* IMainService.swift in Sources */,
 				46EE8D302864DE8200FF86FB /* WelcomeViewController.swift in Sources */,
 				46A9B1AD2864B43F000D32FC /* SearchViewController.swift in Sources */,
 				46A9B18F2864B2B8000D32FC /* AppDelegate.swift in Sources */,
@@ -390,6 +397,7 @@
 				461FEB142865CFE8001D263B /* LocaleKeys.swift in Sources */,
 				46A9B1A92864B348000D32FC /* BaseViewController.swift in Sources */,
 				46A9B1AF2864B470000D32FC /* LibraryViewController.swift in Sources */,
+				4632747B2868FAD800CAFAEF /* MainService.swift in Sources */,
 				46A9B1AB2864B423000D32FC /* HomeViewController.swift in Sources */,
 				466021432865179F00AE1DA7 /* NetworkManager.swift in Sources */,
 				46B625852865119B00F3917B /* INetworkManager.swift in Sources */,

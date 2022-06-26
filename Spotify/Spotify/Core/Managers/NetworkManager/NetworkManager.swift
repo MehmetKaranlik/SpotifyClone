@@ -17,7 +17,9 @@ struct NetworkManager : INetworkManager {
       parseModel: T.Type,
       requestType: RequestType,
       body: [String : String]?,
+      headerType: HeaderType?,
       bodyType: BodyType,
+
       queryParameters: [String : String]?
    ) async -> BaseNetworkResponse<T> where T : Decodable, T : Encodable {
 
@@ -26,7 +28,7 @@ struct NetworkManager : INetworkManager {
       var request = URLRequest(url: url)
       request.httpMethod = requestType.rawValue
       queryGenerator(requestURL: &url, queryParameters: queryParameters)
-      headerGenerator(request: &request)
+      headerGenerator(request: &request,headerType: headerType ?? .NONE)
       bodyGenerator(request: &request, body: body,bodyType: bodyType)
       let (data,response) : (Data?,URLResponse?) = await handleRequest(request: request)
       if let data {
@@ -48,6 +50,7 @@ struct NetworkManager : INetworkManager {
             "code":code,
             "redirect_uri": AuthManager.Constants.redirectURI
          ],
+         headerType: .CODE,
          bodyType: .MULTIFORM,
          queryParameters: nil)
 
