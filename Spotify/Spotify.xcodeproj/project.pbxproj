@@ -74,6 +74,155 @@
 			path = LocaleManager;
 			sourceTree = "<group>";
 		};
+		463274682868F95000CAFAEF /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				463274732868F99000CAFAEF /* Product */,
+				463274722868F98800CAFAEF /* View */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		463274692868F95500CAFAEF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4632746D2868F96600CAFAEF /* Model */,
+				4632746C2868F96300CAFAEF /* Service */,
+				4632746B2868F95F00CAFAEF /* ViewModel */,
+				4632746A2868F95B00CAFAEF /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		4632746A2868F95B00CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46A9B1A82864B348000D32FC /* BaseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4632746B2868F95F00CAFAEF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4632746C2868F96300CAFAEF /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		4632746D2868F96600CAFAEF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4632746E2868F97900CAFAEF /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				463274792868F9C100CAFAEF /* View */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		4632746F2868F97C00CAFAEF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				463274782868F9B800CAFAEF /* View */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		463274702868F97F00CAFAEF /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				463274772868F9AF00CAFAEF /* View */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		463274712868F98300CAFAEF /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				463274762868F9A800CAFAEF /* View */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		463274722868F98800CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				463274742868F99B00CAFAEF /* Home */,
+				463274712868F98300CAFAEF /* Search */,
+				463274702868F97F00CAFAEF /* Library */,
+				4632746F2868F97C00CAFAEF /* Login */,
+				4632746E2868F97900CAFAEF /* Welcome */,
+				463274692868F95500CAFAEF /* Main */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		463274732868F99000CAFAEF /* Product */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		463274742868F99B00CAFAEF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				463274752868F9A000CAFAEF /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		463274752868F9A000CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46A9B1AA2864B423000D32FC /* HomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		463274762868F9A800CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46A9B1AC2864B43F000D32FC /* SearchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		463274772868F9AF00CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46A9B1AE2864B470000D32FC /* LibraryViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		463274782868F9B800CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4688D5462864D5650041AD25 /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		463274792868F9C100CAFAEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		46A9B1822864B2B8000D32FC = {
 			isa = PBXGroup;
 			children = (
@@ -93,50 +242,12 @@
 		46A9B18D2864B2B8000D32FC /* Spotify */ = {
 			isa = PBXGroup;
 			children = (
+				463274682868F95000CAFAEF /* Feature */,
 				46A9B1B02864C187000D32FC /* Core */,
-				46A9B1A72864B303000D32FC /* Services */,
 				46A9B1A62864B2FD000D32FC /* Resources */,
-				46A9B1A52864B2F7000D32FC /* Models */,
-				46A9B1A42864B2F4000D32FC /* ViewModels */,
-				46A9B1A32864B2F2000D32FC /* Views */,
-				46A9B1A22864B2EE000D32FC /* Controllers */,
 				46A9B19C2864B2B9000D32FC /* Info.plist */,
 			);
 			path = Spotify;
-			sourceTree = "<group>";
-		};
-		46A9B1A22864B2EE000D32FC /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				46A9B1A82864B348000D32FC /* BaseViewController.swift */,
-				46A9B1AA2864B423000D32FC /* HomeViewController.swift */,
-				46A9B1AC2864B43F000D32FC /* SearchViewController.swift */,
-				46A9B1AE2864B470000D32FC /* LibraryViewController.swift */,
-				4688D5462864D5650041AD25 /* LoginViewController.swift */,
-				46EE8D2F2864DE8200FF86FB /* WelcomeViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		46A9B1A32864B2F2000D32FC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		46A9B1A42864B2F4000D32FC /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		46A9B1A52864B2F7000D32FC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		46A9B1A62864B2FD000D32FC /* Resources */ = {
@@ -148,13 +259,6 @@
 				46A9B1992864B2B9000D32FC /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		46A9B1A72864B303000D32FC /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		46A9B1B02864C187000D32FC /* Core */ = {

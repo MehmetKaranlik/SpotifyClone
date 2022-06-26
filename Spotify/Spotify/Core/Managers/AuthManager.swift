@@ -37,15 +37,14 @@ class AuthManager : NSObject {
 
    struct Constants {
       static let spotifyBaseURL: String = "https://accounts.spotify.com/authorize?"
-      
+
+      // generate modular scope
       static var spotifyScopes: String =  {
          var scopeString = String()
-         Scopes.allCases.forEach { scopeCase in
-            if scopeCase != Scopes.allCases.last {
-               scopeString.append("\(scopeCase.rawValue)%20")
-            }else {
-               scopeString.append(scopeCase.rawValue)
-            }
+         Scopes.allCases.forEach {
+            if $0 != Scopes.allCases.last {
+               scopeString.append("\($0.rawValue)%20")
+            }else { scopeString.append($0.rawValue) }
          }
          return scopeString
       }()
@@ -55,6 +54,7 @@ class AuthManager : NSObject {
       static let clientSecret: String = "946a49a7af5e4447a84d48a220277659"
    }
 
+   // possible scope types
    enum Scopes : String, CaseIterable {
       case user_read_private = "user-read-private"
       case playlist_modify_public = "playlist-modify-public"
@@ -127,6 +127,7 @@ class AuthManager : NSObject {
    }
 
    private func setExpirationDate( _ newDateInSeconds : Int) {
+      print("Result : \(Date(timeInterval: TimeInterval(integerLiteral: Int64(newDateInSeconds)), since: .now))")
       queue.async {
          self.tokenExpirationData = Date(timeInterval: TimeInterval(integerLiteral: Int64(newDateInSeconds)), since: .now)
       }
@@ -146,8 +147,10 @@ class AuthManager : NSObject {
    private func cacheRefreshDate() {
 
          tokenExpirationData != nil ?
-         localeManager
-            .setDateValue(key: LocaleKeys.EXPIRATION_DATE.rawValue, value: tokenExpirationData!)
+         localeManager.setDateValue(
+            key: LocaleKeys.EXPIRATION_DATE.rawValue,
+            value: tokenExpirationData!)
+      
          : nil
 
    }
