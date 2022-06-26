@@ -10,7 +10,7 @@ import Foundation
 
 struct NetworkManager : INetworkManager {
 
-   var authManager: AuthManager
+   weak var authManager: AuthManager?
 
    func send<T>(
       networkPath: String,
@@ -29,12 +29,9 @@ struct NetworkManager : INetworkManager {
       headerGenerator(request: &request)
       bodyGenerator(request: &request, body: body,bodyType: bodyType)
       let (data,response) : (Data?,URLResponse?) = await handleRequest(request: request)
-//      let jsonData = try! JSONSerialization.jsonObject(with: data!)
-//      for i in jsonData as! Dictionary<String,AnyObject> {
-//         print("Result : \(i.key) : \(i.value)")
-//      }
       if let data {
          let decodedData = decodeData(data: data, parseModel: parseModel.self)
+         await handleRefreshToken(refreshToken: authManager?.refreshToken)
          return BaseNetworkResponse(response: response, data: decodedData)
       }
       return BaseNetworkResponse<T>(response: nil, data: nil)
@@ -42,21 +39,33 @@ struct NetworkManager : INetworkManager {
 
 
    func fetchAccessTokenByCode(code : String) async -> TokenResponseModel? {
-
-      let result = try? await send(networkPath: NetworkPaths.exchangeTokenBaseUrl.rawValue,
-                                   parseModel: TokenResponseModel.self,
-                                   requestType: .POST,
-                                   body: [
-                                    "grant_type": "authorization_code",
-                                    "code":code,
-                                    "redirect_uri": AuthManager.Constants.redirectURI,
-                                   ],
-                                   bodyType: .MULTIFORM,
-                                   queryParameters: nil)
-
+      let result = try? await send(
+         networkPath: NetworkPaths.exchangeTokenBaseUrl.rawValue,
+         parseModel: TokenResponseModel.self,
+         requestType: .POST,
+         body: [
+            "grant_type": "authorization_code",
+            "code":code,
+            "redirect_uri": AuthManager.Constants.redirectURI
+         ],
+         bodyType: .MULTIFORM,
+         queryParameters: nil)
 
       return result?.data
    }
+
+
+   func handleRefreshToken(refreshToken : String?) async -> Void {
+      guard authManager != nil, authManager!.shouldRefreshToken == true else { return }
+      guard authManager!.refreshToken != nil else { return }
+      let result = await fetchAccessTokenByRefreshToken(refreshToken!) as TokenResponseModel?
+      guard result?.accessToken != nil else { return }
+      authManager?.setAccestAccesToken(result!.accessToken!)
+   }
+
+
+
+
 
 
 

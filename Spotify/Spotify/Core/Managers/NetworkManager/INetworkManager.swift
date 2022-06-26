@@ -25,7 +25,7 @@ struct BaseNetworkResponse<T: Codable> {
 }
 
 protocol INetworkManager {
-   var authManager: AuthManager { get set }
+   var authManager: AuthManager? { get set }
    func send<T: Codable>(
       networkPath: String,
       parseModel: T.Type,
@@ -44,7 +44,7 @@ protocol INetworkManager {
 
 extension INetworkManager {
    func headerGenerator(request: inout URLRequest) {
-         let accessToken =  authManager.authorizationSecretBase64()
+         let accessToken =  authManager?.authorizationSecretBase64()
          guard accessToken != nil else { return }
          let headers = [
             "Authorization": "Basic \(accessToken!)",
@@ -94,5 +94,20 @@ extension INetworkManager {
          print(e)
          return nil
       }
+   }
+
+   func fetchAccessTokenByRefreshToken<T: Codable>(_ refreshToken : String) async -> T? {
+
+      let result = await send(
+         networkPath: "",
+         parseModel: T.self,
+         requestType: .GET,
+         body: [
+            "grant_type": "refresh_token",
+            "refresh_token": refreshToken
+         ],
+         bodyType: .JSON,
+         queryParameters: nil)
+      return nil
    }
 }

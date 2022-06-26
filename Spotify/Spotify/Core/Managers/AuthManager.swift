@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AuthManager {
+class AuthManager : NSObject {
    static let shared = AuthManager()
    @Published var accesToken: String? {
       didSet {
@@ -21,11 +21,12 @@ class AuthManager {
       }
    }
 
-   init() {
+   override init() {
+
       self.accesToken = localeManager.getStringValue(key: LocaleKeys.ACCESS_TOKEN.rawValue)
       self.refreshToken = localeManager.getStringValue(key: LocaleKeys.REFRESH_TOKEN.rawValue)
       self.tokenExpirationData = localeManager.getDate(key: LocaleKeys.EXPIRATION_DATE.rawValue)
-      print("Result : \(tokenExpirationData)")
+
    }
 
    let localeManager: LocaleManager = .shared
@@ -34,7 +35,7 @@ class AuthManager {
    let queue = DispatchQueue(label: "queue", qos: .background,
                              attributes: .concurrent, autoreleaseFrequency: .inherit, target: .main)
 
-   enum Constants {
+   struct Constants {
       static let spotifyBaseURL: String = "https://accounts.spotify.com/authorize?"
       static let spotifyScopes: String = "user-read-private"
       static let clientID: String = "3cbad68b84604c298103b3be35ec3111"
@@ -56,6 +57,7 @@ class AuthManager {
 
     var shouldRefreshToken: Bool {
       if tokenExpirationData != nil {
+
          return tokenExpirationData! < .now - 600
       }
       return true
@@ -65,8 +67,8 @@ class AuthManager {
       let token = await networkManager.fetchAccessTokenByCode(code: code)
       if let token {
          queue.async {
-            self.setAccestAccesToken(token.accessToken!)
-            self.setRefreshToken(token.refreshToken!)
+            self.setAccestAccesToken(token.accessToken)
+            self.setRefreshToken(token.refreshToken)
             self.setExpirationDate(token.expiresIn!)
          }
         return  onComplete(true)
@@ -87,15 +89,17 @@ class AuthManager {
 
    // setters
 
-   private func setAccestAccesToken(_ newToken: String) {
+    func setAccestAccesToken(_ newToken: String?) {
+       guard newToken != nil else { return }
       queue.async {
-         self.accesToken = newToken
+         self.accesToken = newToken!
       }
    }
 
-   private func setRefreshToken(_ newToken: String) {
+   private func setRefreshToken(_ newToken: String?) {
+      guard newToken != nil else { return }
       queue.async {
-         self.refreshToken = newToken
+         self.refreshToken = newToken!
       }
    }
 
