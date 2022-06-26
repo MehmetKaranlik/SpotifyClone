@@ -37,10 +37,33 @@ class AuthManager : NSObject {
 
    struct Constants {
       static let spotifyBaseURL: String = "https://accounts.spotify.com/authorize?"
-      static let spotifyScopes: String = "user-read-private"
+      
+      static var spotifyScopes: String =  {
+         var scopeString = String()
+         Scopes.allCases.forEach { scopeCase in
+            if scopeCase != Scopes.allCases.last {
+               scopeString.append("\(scopeCase.rawValue)%20")
+            }else {
+               scopeString.append(scopeCase.rawValue)
+            }
+         }
+         return scopeString
+      }()
+
       static let clientID: String = "3cbad68b84604c298103b3be35ec3111"
       static let redirectURI: String = "https://github.com/MehmetKaranlik/SpotifyClone"
       static let clientSecret: String = "946a49a7af5e4447a84d48a220277659"
+   }
+
+   enum Scopes : String, CaseIterable {
+      case user_read_private = "user-read-private"
+      case playlist_modify_public = "playlist-modify-public"
+      case playlist_read_private = "playlist-read-private"
+      case playlist_modify_private = "playlist-modify-private"
+      case user_follow_read = "user-follow-read"
+      case user_library_modify = "user-library-modify"
+      case user_library_read = "user-library-read"
+      case user_read_email = "user-read-email"
    }
 
    public var signInURL: URL? {
