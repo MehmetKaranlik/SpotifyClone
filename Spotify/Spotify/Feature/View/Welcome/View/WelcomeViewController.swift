@@ -97,7 +97,7 @@ class WelcomeViewController : UIViewController {
    func handleOnComplete(_ success : Bool) {
       if success  {
          DispatchQueue.main.async {
-            let vc = BaseViewController()
+            let vc = MainViewController()
             self.navigationController?.pushViewController(vc, animated: true)
             self.navigationController?.isNavigationBarHidden = true
          }

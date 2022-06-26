@@ -9,4 +9,5 @@ import Foundation
 
 enum NetworkPaths: String {
    case exchangeTokenBaseUrl = "https://accounts.spotify.com/api/token"
+   case baseURL = "https://api.spotify.com/v1"
 }

@@ -9,5 +9,5 @@ import Foundation
 
 protocol IMainService {
    var networkManager : NetworkManager { get set }
-   
+   func fetchCurrentUser() async -> User?
 }

@@ -16,12 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       let authManager = AuthManager.shared
       guard let scene = (scene as? UIWindowScene) else { return }
       window = UIWindow(windowScene: scene)
-      window?.rootViewController = UINavigationController(
-         rootViewController:
-         authManager.shouldRefreshToken ?
-         WelcomeViewController()
-         : BaseViewController()
-      )
+      window?.rootViewController = authManager.shouldRefreshToken
+      ? UINavigationController(rootViewController: WelcomeViewController())
+      : MainViewController()
       window?.makeKeyAndVisible()
    }
 

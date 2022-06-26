@@ -11,21 +11,35 @@ import UIKit
 
 class HomeViewController : UIViewController {
       // MARK:  properties
+   lazy var settingsBarButtonItem : UIBarButtonItem = {
+      let image = UIImage(systemName: "gear.circle")
+      let button = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(didTapSettingsButton))
 
-
-      // MARK: Lifecyle
+      return button
+   }()
 
 
       // MARK: Selectors
 
+   @objc func didTapSettingsButton(){
+      let vc = SettingsViewController()
+      navigationController?.pushViewController(vc, animated: true)
+   }
+
+      // MARK: Lifecyle
+
    override func viewDidLoad() {
       super.viewDidLoad()
-      view.backgroundColor = .systemBackground
+      view.backgroundColor = .black
       Utilities.configureNavBar(vc: self, title: "Home")
+      configureNavBar()
    
    }
 
       // MARK:  Makers
 
+   func configureNavBar() {
+      navigationItem.rightBarButtonItem = settingsBarButtonItem
+   }
 }
 

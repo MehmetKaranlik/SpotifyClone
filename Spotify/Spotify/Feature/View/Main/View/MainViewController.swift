@@ -12,8 +12,9 @@ import Foundation
 import UIKit
 
 
-class BaseViewController : UITabBarController {
+class MainViewController : UITabBarController {
       // MARK:  properties
+   let viewModel = MainViewModel()
    let homeViewController = UINavigationController(rootViewController: HomeViewController())
    let searchViewController = UINavigationController(rootViewController: SearchViewController())
    let libraryViewController = UINavigationController(rootViewController: LibraryViewController())

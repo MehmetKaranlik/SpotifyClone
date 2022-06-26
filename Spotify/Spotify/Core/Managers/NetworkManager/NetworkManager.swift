@@ -27,6 +27,7 @@ struct NetworkManager : INetworkManager {
       print("Result : \(url)")
       var request = URLRequest(url: url)
       request.httpMethod = requestType.rawValue
+      request.timeoutInterval = 15
       queryGenerator(requestURL: &url, queryParameters: queryParameters)
       headerGenerator(request: &request,headerType: headerType ?? .NONE)
       bodyGenerator(request: &request, body: body,bodyType: bodyType)
@@ -41,7 +42,7 @@ struct NetworkManager : INetworkManager {
 
 
    func fetchAccessTokenByCode(code : String) async -> TokenResponseModel? {
-      let result = try? await send(
+      let result = await send(
          networkPath: NetworkPaths.exchangeTokenBaseUrl.rawValue,
          parseModel: TokenResponseModel.self,
          requestType: .POST,
@@ -54,7 +55,7 @@ struct NetworkManager : INetworkManager {
          bodyType: .MULTIFORM,
          queryParameters: nil)
 
-      return result?.data
+      return result.data
    }
 
 
