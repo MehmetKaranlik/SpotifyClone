@@ -42,11 +42,21 @@ class MainViewController : UITabBarController {
       viewControllers?.forEach({ controller in
          let index = viewControllers?.firstIndex(of: controller)
          controller.tabBarItem = UITabBarItem(title: name[index!], image: UIImage(systemName: symbols[index!]), tag: index!)
+
       })
    }
 
    func configureTabBar() {
-      tabBar.backgroundColor = UIColor.secondarySystemGroupedBackground
+      let appereance = UITabBarAppearance()
+      appereance.backgroundEffect = UIBlurEffect(style: .systemChromeMaterialLight)
+      appereance.backgroundColor = .systemGroupedBackground.withAlphaComponent(0.8)
+
+      tabBar.standardAppearance = appereance
+      tabBar.unselectedItemTintColor = .white
+      tabBar.tintColor = .systemGreen
+      tabBar.scrollEdgeAppearance = appereance
+
+
    }
 
 }

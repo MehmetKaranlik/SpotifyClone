@@ -19,7 +19,6 @@ struct NetworkManager : INetworkManager {
       body: [String : String]?,
       headerType: HeaderType?,
       bodyType: BodyType,
-
       queryParameters: [String : String]?
    ) async -> BaseNetworkResponse<T> where T : Decodable, T : Encodable {
 

@@ -11,6 +11,8 @@ import Foundation
 class MainViewModel : BaseViewModel {
    private lazy var service : IMainService = MainService(networkManager: networkManager)
 
+   @Published var user : User?
+
    override init() {
       super.init()
       fetchUser()
@@ -22,7 +24,7 @@ class MainViewModel : BaseViewModel {
 
    func fetchUser() {
       Task {
-         await service.fetchCurrentUser()
+         user = await service.fetchCurrentUser()
       }
    }
 
